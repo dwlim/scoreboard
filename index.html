@@ -1,0 +1,236 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Our Funky HTML Page</title>
+  <meta name="description" content="Our first page">
+  <meta name="keywords" content="html tutorial template">
+</head>
+
+<body>
+  Scoreboard
+
+  <br>
+  Home
+  <div id="home-score">
+  </div>
+  <button id="home-increment" type="button">+1</button>
+  <button id="home-decrement" type="button">-1</button>
+
+  <br>
+  Away
+  <div id="away-score">
+  </div>
+  <button id="away-increment" type="button">+1</button>
+  <button id="away-decrement" type="button">-1</button>
+
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>Modal Header</h2>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the Modal Body</p>
+      </div>
+      <div class="modal-footer">
+        <button id="modal-submit">Submit Scores</button>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
+
+<script>
+  const count_limit = 5
+
+  const increment = [document.getElementById("home-increment"), document.getElementById("away-increment")];
+  const decrement = [document.getElementById("home-decrement"), document.getElementById("away-decrement")];
+
+  const modal = document.getElementById("myModal");
+
+  const modal_header = document.getElementsByClassName("modal-header")[0];
+  const modal_body = document.getElementsByClassName("modal-body")[0];
+  const modal_submit = document.getElementById("modal-submit")
+
+  const span = document.getElementsByClassName("close")[0];
+
+  const score = [document.getElementById("home-score"), document.getElementById("away-score")];
+
+  var count = [0, 0];
+
+  updateScore();
+
+  span.onclick = function () {
+    modal.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  function handleIncrement(team, num) {
+    count[team] += num;
+    updateScore();
+  };
+
+  function updateScore() {
+    for (let index = 0; index < count.length; ++index) {
+      if (count[index] >= count_limit) {
+        count[index] = count_limit;
+        modal_header.innerHTML = index + " team won";
+        modal_body.innerHTML = "Score was: <br> Home " + count[0] + " : "  + count[1] + " Away";
+        modal.style.display = "block";
+        break;
+      }
+    }
+
+    for (let index = 0; index < score.length; ++index) {
+      score[index].innerHTML = count[index]
+    }
+  }
+
+  for (let index = 0; index < increment.length; ++index) {
+    increment[index].addEventListener("click", function () {
+      handleIncrement(index, 1);
+    });
+  }
+
+  for (let index = 0; index < decrement.length; ++index) {
+    decrement[index].addEventListener("click", function () {
+      handleIncrement(index, -1);
+    });
+  }
+  modal_submit.addEventListener("click", function () {
+    const url = "https://docs.google.com/forms/d/e/1FAIpQLScVKEZj_tNk21Oi55zyx8MHDUveWO0n815kyClXvK7dOSUaxw/viewform?usp=pp_url" +
+    "&entry.1775913345=" + count[0] + "&entry.2045439377=" + count[1] + "&entry.1640064163=" + "HomeAwayID"
+    window.open(url);
+  })
+
+</script>
+
+<style>
+  /* The Modal (background) */
+  .modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    -webkit-animation-name: fadeIn;
+    /* Fade in the background */
+    -webkit-animation-duration: 0.4s;
+    animation-name: fadeIn;
+    animation-duration: 0.4s
+  }
+
+  /* Modal Content */
+  .modal-content {
+    position: fixed;
+    bottom: 0;
+    background-color: #fefefe;
+    width: 100%;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s
+  }
+
+  /* The Close Button */
+  .close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+  }
+
+  .modal-body {
+    padding: 2px 16px;
+  }
+
+  .modal-footer {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+  }
+
+  /* Add Animation */
+  @-webkit-keyframes slideIn {
+    from {
+      bottom: -300px;
+      opacity: 0
+    }
+
+    to {
+      bottom: 0;
+      opacity: 1
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      bottom: -300px;
+      opacity: 0
+    }
+
+    to {
+      bottom: 0;
+      opacity: 1
+    }
+  }
+
+  @-webkit-keyframes fadeIn {
+    from {
+      opacity: 0
+    }
+
+    to {
+      opacity: 1
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0
+    }
+
+    to {
+      opacity: 1
+    }
+  }
+</style>
