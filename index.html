@@ -6,24 +6,26 @@
 </head>
 
 <body>
-  <div>
-    Scoreboard
+  <div style="text-align: center;">
+    <h1>Scoreboard</h1>
+    <br>
+    Input your match ID: <input id="matchID" type="text">
   </div>
 
   <br>
   <br>
   
-  <div style="width: 40%; float: left;">
-    Home
-    <div id="home-score">
+  <div style="width: 40%; float: left; text-align: center;">
+    <h2 id="home-name">Home</h2>
+    <div id="home-score" style="font-size: 16em;">
     </div>
     <button id="home-increment" type="button">+1</button>
     <button id="home-decrement" type="button">-1</button>
   </div>
 
-  <div style="width: 40%; float: right;">
-    Away
-    <div id="away-score">
+  <div style="width: 40%; float: right; text-align: center;">
+    <h2 id="away-name">Away</h2>
+    <div id="away-score" style="font-size: 16em;">
     </div>
     <button id="away-increment" type="button">+1</button>
     <button id="away-decrement" type="button">-1</button>
@@ -85,7 +87,7 @@
   function updateScore() {
     for (let index = 0; index < count.length; ++index) {
       if (count[index] >= count_limit && count[index] >= Math.min(...count) + 2) {
-        modal_body.innerHTML = teams[index] + " team won <br> Score was: <br> Home " + count[0] + " : "  + count[1] + " Away";
+        modal_body.innerHTML = teams[index] + " team won <br><br> Score was: <br> Home " + count[0] + " : "  + count[1] + " Away";
         modal.style.display = "block";
         break;
       }
@@ -109,7 +111,7 @@
   }
   modal_submit.addEventListener("click", function () {
     const url = "https://docs.google.com/forms/d/e/1FAIpQLScVKEZj_tNk21Oi55zyx8MHDUveWO0n815kyClXvK7dOSUaxw/viewform?usp=pp_url" +
-    "&entry.1775913345=" + count[0] + "&entry.2045439377=" + count[1] + "&entry.1640064163=" + "HomeAwayID"
+    "&entry.1775913345=" + count[0] + "&entry.2045439377=" + count[1] + "&entry.1640064163=" + document.getElementById("matchID").value
     window.open(url);
   })
 
@@ -121,6 +123,7 @@
     display: none;
     /* Hidden by default */
     position: fixed;
+    text-align: center;
     /* Stay in place */
     z-index: 1;
     /* Sit on top */
