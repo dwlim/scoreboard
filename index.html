@@ -6,25 +6,28 @@
 </head>
 
 <body>
-  Scoreboard
+  <div>
+    Scoreboard
+  </div>
 
   <br>
   <br>
   
-  Home
-  <div id="home-score">
+  <div style="width: 40%; float: left;">
+    Home
+    <div id="home-score">
+    </div>
+    <button id="home-increment" type="button">+1</button>
+    <button id="home-decrement" type="button">-1</button>
   </div>
-  <button id="home-increment" type="button">+1</button>
-  <button id="home-decrement" type="button">-1</button>
 
-  <br>
-  <br>
-  
-  Away
-  <div id="away-score">
+  <div style="width: 40%; float: right;">
+    Away
+    <div id="away-score">
+    </div>
+    <button id="away-increment" type="button">+1</button>
+    <button id="away-decrement" type="button">-1</button>
   </div>
-  <button id="away-increment" type="button">+1</button>
-  <button id="away-decrement" type="button">-1</button>
 
   <!-- The Modal -->
   <div id="myModal" class="modal">
@@ -33,7 +36,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <span class="close">&times;</span>
-        <h2>Modal Header</h2>
+        <h2>Game Over</h2>
       </div>
       <div class="modal-body">
         <p>Some text in the Modal Body</p>
@@ -74,13 +77,6 @@
     modal.style.display = "none";
   }
 
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  }
-
   function handleIncrement(team, num) {
     count[team] += num;
     updateScore();
@@ -88,10 +84,8 @@
 
   function updateScore() {
     for (let index = 0; index < count.length; ++index) {
-      if (count[index] >= count_limit) {
-        count[index] = count_limit;
-        modal_header.innerHTML = teams[index] + " team won";
-        modal_body.innerHTML = "Score was: <br> Home " + count[0] + " : "  + count[1] + " Away";
+      if (count[index] >= count_limit && count[index] >= Math.min(...count) + 2) {
+        modal_body.innerHTML = teams[index] + " team won <br> Score was: <br> Home " + count[0] + " : "  + count[1] + " Away";
         modal.style.display = "block";
         break;
       }
